@@ -14,7 +14,7 @@ interface GridProps {
 
 function Grid({columnDefs, rowData}: GridProps) {
   return (
-    <div className="ag-theme-alpine" style={{ width: 600, height: 400, margin: '0 auto' }}>
+    <div className="ag-theme-alpine" style={{ width: 800, height: 261, margin: '0 auto' }}>
       <AgGridReact
         rowData={rowData}
         columnDefs={columnDefs}>
