@@ -10,17 +10,17 @@ function UserPage() {
   const limit = 5;
   const [userList, setUserList] = useState([]);
   const [columnDefs] = useState([
-      { field: 'name', headerName: '이름' },
-      { field: 'role', headerName: '역할' },
-      { field: 'email', headerName: '이메일' },
-      { field: 'telephone', headerName: '전화번호' }
+      { field: 'name', headerName: '이름',headerClass: 'header-center'},
+      { field: 'role', headerName: '역할',headerClass: 'header-center' },
+      { field: 'email', headerName: '이메일',headerClass: 'header-center' },
+      { field: 'telephone', headerName: '전화번호',headerClass: 'header-center' }
   ]);
 
   useEffect(() => {
     getUserList(page)
       .then((response) => {
         const rowDataArray = response.users?.map((user) => {
-          return { ...user, name: user.firstName + user.lastName }
+          return { ...user, name: `${user.firstName} ${user.lastName}`}
         });
 
         setUserList(rowDataArray);
