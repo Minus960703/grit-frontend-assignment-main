@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import './Pagination.scss';
+import styles from './Pagination.module.scss';
 // import styles from './Pagination.scss';
 import { IconImage } from 'components';
 
@@ -38,9 +38,9 @@ function Pagination({
   }
 
   return (
-		<div className={'page__area'}>
+		<div className={styles.page__area}>
 			<button 
-        className={`page__move ${page === 1 ? 'empty' : ''}`}
+        className={`${styles.page__move} ${page === 1 ? 'empty' : ''}`}
 				onClick={() => moveToPrevPage()} 
 			>
 				{page !== 1 
@@ -49,7 +49,7 @@ function Pagination({
 				}
 			</button>
 			<button
-				className={`page__btn ${page === firstNum ? 'active' : ''}`}
+				className={`${styles.page__btn} ${page === firstNum ? 'active' : ''}`}
 				onClick={() => setPage(firstNum)}
 			>
 				{firstNum}
@@ -58,7 +58,7 @@ function Pagination({
 				if(i <=2){
 					return (
 						<button
-							className={`page__btn ${page === firstNum+1+i ? 'active' : ''}`}
+							className={`${styles.page__btn} ${page === firstNum+1+i ? 'active' : ''}`}
 							key={i+1} 
               onClick={() => { setPage(firstNum + 1 + i)}}
 						>
@@ -69,7 +69,7 @@ function Pagination({
 				else if(i>=3){
 					return (
 						<button 
-              className={'page__btn'}
+              className={styles.page__btn}
 							key ={i+1}
 							onClick={() => setPage(lastNum)}
 						>
@@ -79,7 +79,7 @@ function Pagination({
 				}
 			})}
 			<button 
-				className={`page__move ${page === numPages ? 'empty' : ''}`}
+				className={`${styles.page__move} ${page === numPages ? 'empty' : ''}`}
 				onClick={() => moveToNextPage()} 
 			>
 				{page !== numPages 
