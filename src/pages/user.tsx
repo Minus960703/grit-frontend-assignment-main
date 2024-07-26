@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import { getUserList } from '../api/userAPI'
-import { Grid, Pagination } from 'components';
+import { getUserList } from '@/api/userAPI'
+import { Grid, Pagination, UserForm } from '@/components';
 
 function UserPage() {
   const [page, setPage] = useState<number>(1);
@@ -44,6 +44,7 @@ function UserPage() {
               totalPages={totalPages}
             />
       }
+      <UserForm />
     </div>
   )
 }
