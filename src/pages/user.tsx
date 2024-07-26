@@ -10,10 +10,10 @@ function UserPage() {
   const limit = 5;
   const [userList, setUserList] = useState([]);
   const [columnDefs] = useState([
-    { field: 'name', headerName: '이름',headerClass: 'header-center', resizable: false, cellStyle: {'textAlign' : 'left'}, width: 150},
-    { field: 'role', headerName: '역할',headerClass: 'header-center', resizable: false, width: 150 },
-    { field: 'email', headerName: '이메일',headerClass: 'header-center', resizable: false, cellStyle: {'textAlign' : 'left'}, width: 250 },
-    { field: 'telephone', headerName: '전화번호',headerClass: 'header-center', resizable: false, width: 250 }
+    { field: 'name'     , headerName: '이름'    , headerClass: 'header-center'  , resizable: false  , cellStyle: {'textAlign' : 'left'}, width: 150},
+    { field: 'role'     , headerName: '역할'    , headerClass: 'header-center'  , resizable: false  , width: 150 },
+    { field: 'email'    , headerName: '이메일'  , headerClass: 'header-center'  , resizable: false  , cellStyle: {'textAlign' : 'left'}, width: 250 },
+    { field: 'telephone', headerName: '전화번호' , headerClass: 'header-center'  , resizable: false  , width: 250 }
   ]);
 
   useEffect(() => {
