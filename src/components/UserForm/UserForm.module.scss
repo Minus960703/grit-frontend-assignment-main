@@ -3,4 +3,16 @@
   border: 1px solid #ccc;
   border-radius: 3px;
   height: 400px;
+
+  .user__name {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 280px 280px;
+  }
+
+  .user__element {
+    width: 100%;
+    display: flex;
+    gap: 10px;
+  }
 }

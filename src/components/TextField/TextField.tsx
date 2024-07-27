@@ -1,7 +1,7 @@
 import React        from 'react'
 import styles       from './TextField.module.scss';
 
-interface InputProps {
+interface TextFieldProps {
   name            : string;
   value           : string;
   type            : string;
@@ -11,6 +11,7 @@ interface InputProps {
   onKeyDown      ?: boolean;
   onKeyDownEvent ?: () => void;
   pattern        ?: string;
+  id             ?: string;
 }
 
 const TextField = ({
@@ -22,8 +23,9 @@ const TextField = ({
   onChangeEvent,
   onKeyDown        = false,
   onKeyDownEvent,
-  pattern          = ''
-}: InputProps) => {
+  pattern          = '',
+  id
+}: TextFieldProps) => {
   const keyPressDownEnterKey = (e: React.KeyboardEvent<HTMLInputElement>) => {
     (e.key === 'Enter' && onKeyDownEvent) && onKeyDownEvent();
   }
@@ -40,6 +42,7 @@ const TextField = ({
       onKeyDown       = {onKeyDown ? (e) => {keyPressDownEnterKey(e)} : () => {}}
       required        = {type === 'email' ? true : false}
       pattern         = {pattern}
+      id              = {id}
     />
   )
 }
