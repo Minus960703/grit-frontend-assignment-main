@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-enum UserRole {
+export enum UserRole {
   'ADMIN',
   'USER',
   'GUEST'
