@@ -1,4 +1,12 @@
+* {
+  box-sizing: border-box;
+}
+
 .header-center .ag-header-cell-label {
   justify-content: center;
   text-align: center;
+}
+
+.selected-cell {
+  background-color: yellow !important;
 }

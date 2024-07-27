@@ -53,15 +53,22 @@ function UserPage() {
       })
   }, [searchParam.page]);
 
-  useEffect(() => {
-
-  })
+  const handleCellClicked = (params: any) => {
+    const field = params.data;
+    console.log({...field});
+    setUserInfo({ ...field });
+    
+    // setUserInfo((prev) => {
+    //   return { ...prev, [field]: value };
+    // });
+  };
 
   return (
     <div>
       <Grid
-        rowData     = {userList}
-        columnDefs  = {columnDefs}
+        rowData       = {userList}
+        columnDefs    = {columnDefs}
+        onCellClicked = {handleCellClicked}
       />
       {userList.length
           && <Pagination
