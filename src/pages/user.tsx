@@ -1,11 +1,13 @@
 import React, { useCallback, useEffect, useState } from 'react'
-import { UserRole, getUserList } from '@/api/userAPI'
+import { getUserList, updateUserInfo } from '@/api/userAPI'
 import { Grid, Pagination, UserForm } from '@/components';
+import { CellClickedEvent } from 'ag-grid-community';
 
 const initialValue = {
+  id: '',
   firstName: '',
   lastName: '',
-  role: UserRole,
+  role: 'ADMIN',
   email: '',
   telephone: ''
 };
@@ -14,6 +16,8 @@ function UserPage() {
   const [searchParam, setSearchParam] = useState({
     page: 1,
   });
+
+  const [selectActive, setSelectActive] = useState(false);
 
   const [totalPages, setTotalPages] = useState<number>(0);
   const [totalEvents, setTotalEvents] = useState<number>(0);
@@ -40,28 +44,40 @@ function UserPage() {
     })
   }
 
-  useEffect(() => {
+  const loadUserList = () => {
     getUserList(searchParam.page)
       .then((response) => {
         const rowDataArray = response.users?.map((user) => {
-          return { ...user, name: `${user.firstName} ${user.lastName}`}
+          return { ...user, name: `${user.firstName} ${user.lastName}` }
         });
 
         setUserList(rowDataArray);
         setTotalEvents(response.total);
         setTotalPages(Math.ceil(response.total / limit));
-      })
+      });
+  }
+
+  useEffect(() => {
+    loadUserList();
   }, [searchParam.page]);
 
-  const handleCellClicked = (params: any) => {
+  const handleCellClicked = (params: CellClickedEvent) => {
     const field = params.data;
-    console.log({...field});
     setUserInfo({ ...field });
-    
-    // setUserInfo((prev) => {
-    //   return { ...prev, [field]: value };
-    // });
   };
+
+  const isChangeSelectActive = () => setSelectActive((prev) => !prev);
+
+  const isChangeSelectBoxItems = (name, value) => {
+    onChangeUserInfo(name, value);
+    isChangeSelectActive();
+  };
+  
+  const onClickedSaveButton = () => {
+    updateUserInfo(userInfo)
+      .then((response) => loadUserList())
+      .catch((reject) => console.warn(reject));
+  }
 
   return (
     <div>
@@ -83,6 +99,10 @@ function UserPage() {
       <UserForm
         userInfo          = {userInfo}
         onChangeUserInfo  = {onChangeUserInfo}
+        selectActive={selectActive}
+        isChangeSelectActive={isChangeSelectActive}
+        isChangeSelectBoxItems={isChangeSelectBoxItems}
+        onClickedSaveButton={onClickedSaveButton}
       />
     </div>
   )

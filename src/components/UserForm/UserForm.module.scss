@@ -1,10 +1,16 @@
 .user__form {
+  position: relative;
   width: calc(800px - 2px);
   height: 400px;
   border: 1px solid #ccc;
   border-radius: 3px;
   padding: 20px;
   
+  >button {
+    position: absolute;
+    bottom: 30px;
+    right: 30px;
+  }
 
   .user__name {
     width: 100%;

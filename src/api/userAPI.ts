@@ -30,4 +30,20 @@ const getUserList = async(page: UserListProps['page'] = 1) => {
   }
 }
 
-export { getUserList };
+const updateUserInfo = async ({id, firstName, lastName, email, role, telephone}) => {
+  try {
+    const response = await axios.patch(`/api/users/${id}`, {
+      firstName,
+      lastName,
+      email,
+      role,
+      telephone
+    });
+
+    return response.data;
+  } catch (error) {
+    throw new Error(`Error: ${error}`);
+  }
+}
+
+export { getUserList, updateUserInfo };

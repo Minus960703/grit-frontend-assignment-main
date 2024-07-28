@@ -1,10 +1,11 @@
 
 import React from 'react'
 import ArrowLeft   from 'assets/arrow_left.png';
-import ArrowRight   from 'assets/arrow_right.png';
+import ArrowRight from 'assets/arrow_right.png';
+import ArrowDown from 'assets/arrow_down.png';
 
 interface IconProps {
-  icon: 'ARROWLEFT' | 'ARROWRIGHT';
+  icon: 'ARROWLEFT' | 'ARROWRIGHT' | 'ARROWDOWN';
 }
 
 interface IconImageProps extends IconProps {
@@ -18,6 +19,8 @@ const isDiscernIcon = ({ icon }: IconProps) => {
       return ArrowLeft;
     case 'ARROWRIGHT':
       return ArrowRight;
+    case 'ARROWDOWN':
+      return ArrowDown;
     default:
       break;
   }

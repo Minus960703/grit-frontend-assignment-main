@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import styles from './Pagination.module.scss';
 // import styles from './Pagination.scss';
-import { IconImage } from 'components';
+import { IconImage } from '@/components';
 
 interface PaginationProps {
 	page: number;
