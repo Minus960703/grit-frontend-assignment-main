@@ -1,8 +1,8 @@
 import React from 'react'
 import styles from './UserForm.module.scss';
-import { TextField } from 'components';
+import { Button, Select, TextField } from '@/components';
 
-function UserForm({userInfo, onChangeUserInfo}) {
+function UserForm({userInfo, onChangeUserInfo, selectActive, isChangeSelectActive, isChangeSelectBoxItems, onClickedSaveButton}) {
   return (
     <div className={styles.user__form}>
       <div className={styles.user__name}>
@@ -21,13 +21,18 @@ function UserForm({userInfo, onChangeUserInfo}) {
       </div>
       <div className={styles.user__element}>
         <label htmlFor='telephone'>전화번호</label>
-        <TextField name='telephone' value={userInfo.telephone} type="text" placeholder='이름을 입력해주세요.' onChangeEvent={onChangeUserInfo} id="telephone"/>
+        <TextField name='telephone' value={userInfo.telephone} type="tel" placeholder='이름을 입력해주세요.' onChangeEvent={onChangeUserInfo} id="telephone" />
       </div>
       <div className={styles.user__element}>
         <label htmlFor='role'>역할</label>
-        select
-        <TextField name='role' value={userInfo.role} type="text" placeholder='이름을 입력해주세요.' onChangeEvent={() => {}} id="role"/>
+        <Select
+          selectOption={userInfo.role}
+          selectActive={selectActive}
+          isChangeSelectActive={isChangeSelectActive}
+          isChangeSelectBoxItems={isChangeSelectBoxItems}
+        />
       </div>
+      <Button value={'저장'} onClickEvent={onClickedSaveButton}/>
     </div>
   )
 }
