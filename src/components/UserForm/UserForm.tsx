@@ -2,7 +2,16 @@ import React from 'react'
 import styles from './UserForm.module.scss';
 import { Button, Select, TextField } from '@/components';
 
-function UserForm({userInfo, onChangeUserInfo, selectActive, isChangeSelectActive, isChangeSelectBoxItems, onClickedSaveButton}) {
+function UserForm({ userInfo, onChangeUserInfo, selectActive, isChangeSelectActive, isChangeSelectBoxItems, onClickedSaveButton }) {
+  const updateValidationCheck = () => {
+    const { id, firstName, lastName, role, telephone, email } = userInfo;
+
+    if (id && firstName && lastName && role && telephone && email) {
+      return false;
+    }
+
+    return true;
+	};
   return (
     <div className={styles.user__form}>
       <div className={styles.user__name}>
@@ -32,7 +41,7 @@ function UserForm({userInfo, onChangeUserInfo, selectActive, isChangeSelectActiv
           isChangeSelectBoxItems={isChangeSelectBoxItems}
         />
       </div>
-      <Button value={'저장'} onClickEvent={onClickedSaveButton}/>
+      <Button value={'저장'} onClickEvent={onClickedSaveButton} disabled={updateValidationCheck()} />
     </div>
   )
 }

@@ -1,0 +1,38 @@
+@import '@/styles/DefaultValueVariable.scss';
+
+.header {
+  display: flex;
+  justify-content: space-between;
+
+  .back__btn {
+    position: relative;
+    cursor: pointer;
+    width: 24px;
+
+    > span {
+      position: absolute;
+      width: 2px;
+      height: 12px;
+      top: 50%;
+      left: 10px;
+      background-color: $--color-black;
+
+      &:first-child {
+        top: calc(50% + 5px);
+        transform: rotate(-45deg);
+      }
+
+      &:nth-child(2) {
+        top: calc(50% - 4px);
+        left: 15px;
+        height: 20px;
+        transform: rotate(90deg);
+      }
+
+      &:last-child {
+        top: calc(50% - 5px);
+        transform: rotate(45deg);
+      }
+    }
+  }
+}

@@ -20,9 +20,9 @@ export interface UserInfoProps {
   telephone : string;
 }
 
-const getUserList = async(page: UserListProps['page'] = 1) => {
+const getUserList = async({page = 1, role}: UserListProps) => {
   try {
-    const response = await axios.get(`/api/users?page=${page}`);
+    const response = await axios.get(`/api/users?page=${page}${role && `&role=${role}`}`);
 
     return response.data;
   } catch (error) {

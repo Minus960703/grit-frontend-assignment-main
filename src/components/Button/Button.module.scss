@@ -35,4 +35,9 @@
     }
   }
 
+  &.readOnly {
+    background-color: $--color-gray-light;
+    color: $--color-black;
+    cursor: not-allowed;
+  }
 }

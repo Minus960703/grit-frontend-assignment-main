@@ -20,16 +20,20 @@ const SelectArray = [
 	}
 ]
 
-function Select({ selectOption, selectActive, isChangeSelectActive, isChangeSelectBoxItems }: Props) {
+function Select({ selectOption, selectActive, isChangeSelectActive, isChangeSelectBoxItems, filter = false }: Props) {
   return (
     <ul
       className={
         `${styles.select} ${selectActive ? styles['select--active'] : undefined}`
       }
-      onClick={() => {isChangeSelectActive}}
+      onClick={isChangeSelectActive}
     >
-      <p>{selectOption}</p>
-			<div className={`${styles.select__option} ${selectActive ? styles['select__option--active'] : undefined}`}>
+      <p>{selectOption || '전체'}</p>
+			<div
+				className={`${styles.select__option} ${selectActive ? styles['select__option--active'] : undefined}`}
+				onClick={(e) => e.stopPropagation()}
+			>
+				{filter && <p onClick={() => isChangeSelectBoxItems('role', '')}>전체</p>}
 				{SelectArray?.map((selectItem) => (
 					<p
 						key={selectItem.id}
@@ -40,9 +44,7 @@ function Select({ selectOption, selectActive, isChangeSelectActive, isChangeSele
 				))}
 			</div>
 			<button className={styles.btn__arrow}>
-				{!selectActive
-					&& <IconImage icon='ARROWDOWN' />
-				}
+				{!selectActive && <IconImage icon='ARROWDOWN' />}
 			</button>
     </ul>
   )
