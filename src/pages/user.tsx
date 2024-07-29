@@ -113,7 +113,7 @@ function UserPage() {
   
   const onClickedSaveButton = () => {
     updateUserInfo(userInfo)
-      .then(() => loadUserList())
+      .then(() => { loadUserList(); setUpdateFormCheck(false); })
       .catch((reject) => console.warn(reject));
   }
 
