@@ -2,7 +2,14 @@ import React from 'react'
 import styles from './UserForm.module.scss';
 import { Button, Select, TextField } from '@/components';
 
-function UserForm({ userInfo, onChangeUserInfo, selectActive, isChangeSelectActive, isChangeSelectBoxItems, onClickedSaveButton }) {
+function UserForm({
+  userInfo,
+  onChangeUserInfo,
+  selectActive,
+  isChangeSelectActive,
+  isChangeSelectBoxItems,
+  onClickedSaveButton
+}) {
   const updateValidationCheck = () => {
     const { id, firstName, lastName, role, telephone, email } = userInfo;
 

@@ -21,8 +21,8 @@ function UserPage() {
   ]);
 
   const [searchParam, setSearchParam] = useState({
-    page: 1,
-    role: '',
+    page: Number(sessionStorage.getItem('page')) || 1,
+    role: sessionStorage.getItem('role') || '',
     active: false,
   });
 
@@ -33,6 +33,7 @@ function UserPage() {
   const [userList, setUserList] = useState([]);
   const [userInfo, setUserInfo] = useState({ ...initialValue });
   const [selectActive, setSelectActive] = useState(false);
+  const [updateFormCheck, setUpdateFormCheck] = useState(false);
 
   const loadUserList = () => {
     getUserList(searchParam)
@@ -53,10 +54,19 @@ function UserPage() {
 
   const handleCellClicked = (params: CellClickedEvent) => {
     const field = params.data;
-    setUserInfo({ ...field });
+    if (updateFormCheck) {
+      const userConfirmed = window.confirm('수정중인 내용이 있습니다.\n지금 변경하시면 저장되지 않습니다.\n변경 하시겠습니까?');
+      if (userConfirmed) {
+        setUpdateFormCheck(false);
+        setUserInfo({ ...field });
+      }
+    } else setUserInfo({ ...field });
   };
 
   const onChangeUserInfo = (name: string, value: string) => {
+    if (!updateFormCheck) {
+      setUpdateFormCheck(true);
+    }
     setUserInfo((prev) => {
       return { ...prev, [name]: value };
     })
@@ -77,10 +87,15 @@ function UserPage() {
     });
   }
 
-  const isChangeCurrentPage = (value: number) => onChangeSearchParam('page', value);
+  const isChangeCurrentPage = (value: number) => {
+    onChangeSearchParam('page', value);
+    sessionStorage.setItem('page', String(value));
+  };
 
   const isChangeSearchParamRole = (name: string, value: string) => {
     if (searchParam.active) {
+      sessionStorage.setItem('role', value);
+      isChangeCurrentPage(1);
       onChangeSearchParam('role', value);
     }
     isChangeSearchParamSelectActive();
@@ -100,6 +115,7 @@ function UserPage() {
         searchParam={searchParam}
         isChangeSelectActive={isChangeSearchParamSelectActive}
         isChangeSelectBoxItems={isChangeSearchParamRole}
+        updateFormCheck={updateFormCheck}
       />
       <Grid
         rowData       = {userList}
@@ -123,7 +139,6 @@ function UserPage() {
         isChangeSelectActive={isChangeSelectActive}
         isChangeSelectBoxItems={isChangeSelectBoxItems}
         onClickedSaveButton={onClickedSaveButton}
-        // updateValidationCheck={updateValidationCheck}
       />
     </div>
   )
