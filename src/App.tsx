@@ -1,22 +1,10 @@
 import { Routes, Route      } from 'react-router-dom'
-import { useEffect          } from 'react'
 import NotFoundPage           from './pages/not-found'
 import UserPage               from './pages/user'
 import './App.css'
 import { Link } from 'react-router-dom'
 
 function App() {
-  // useEffect(() => {
-  //   fetch('/api/users?page=2')
-  //     .then((res) => res.json())
-  //     .then((data) => {
-  //       console.log(data)
-  //     })
-  //     .catch((err) => {
-  //       console.log(err)
-  //     })
-  // }, [])
-
   return (
     <div
       style={{

@@ -1,16 +1,28 @@
-import React, { useCallback, useEffect, useState } from 'react'
-import { getUserList, updateUserInfo } from '@/api/userAPI'
-import { Grid, Pagination, UserForm, Header } from '@/components';
-import { CellClickedEvent } from 'ag-grid-community';
+import React, { useEffect, useState                           } from 'react'
+import { UserInfoProps, UserRole, getUserList, updateUserInfo } from '@/api/userAPI'
+import { Grid, Pagination, UserForm, Header                   } from '@/components';
+import { CellClickedEvent                                     } from 'ag-grid-community';
+
+export interface SearchParamProps {
+  page  : number,
+  role  : '' | UserRole,
+  active: boolean
+}
 
 const initialValue = {
-  id: '',
-  firstName: '',
-  lastName: '',
-  role: 'ADMIN',
-  email: '',
-  telephone: ''
+  id        : 0,
+  firstName : '',
+  lastName  : '',
+  role      : UserRole.ADMIN,
+  email     : '',
+  telephone : ''
 };
+
+const searchParamInitialValue: SearchParamProps = {
+  page  : Number(sessionStorage.getItem('page')) || 1,
+  role  : (sessionStorage.getItem('role') as UserRole | null) || "",
+  active: false,
+}
 
 function UserPage() {
   const [columnDefs] = useState([
@@ -20,25 +32,21 @@ function UserPage() {
     { field: 'telephone', headerName: '전화번호' , headerClass: 'header-center'  , resizable: false  , width: 250 }
   ]);
 
-  const [searchParam, setSearchParam] = useState({
-    page: Number(sessionStorage.getItem('page')) || 1,
-    role: sessionStorage.getItem('role') || '',
-    active: false,
-  });
+  const [searchParam, setSearchParam        ] = useState<SearchParamProps>({...searchParamInitialValue});
 
-  const [totalPages, setTotalPages] = useState<number>(0);
-  const [totalEvents, setTotalEvents] = useState<number>(0);
+  const [totalPages, setTotalPages          ] = useState<number>(0);
+  const [totalEvents, setTotalEvents        ] = useState<number>(0);
   const limit = 5;
 
-  const [userList, setUserList] = useState([]);
-  const [userInfo, setUserInfo] = useState({ ...initialValue });
-  const [selectActive, setSelectActive] = useState(false);
+  const [userList, setUserList              ] = useState([]);
+  const [userInfo, setUserInfo              ] = useState({ ...initialValue });
+  const [selectActive, setSelectActive      ] = useState(false);
   const [updateFormCheck, setUpdateFormCheck] = useState(false);
 
   const loadUserList = () => {
     getUserList(searchParam)
       .then((response) => {
-        const rowDataArray = response.users?.map((user) => {
+        const rowDataArray = response.users?.map((user: UserInfoProps) => {
           return { ...user, name: `${user.firstName} ${user.lastName}` }
         });
 
@@ -105,17 +113,17 @@ function UserPage() {
   
   const onClickedSaveButton = () => {
     updateUserInfo(userInfo)
-      .then((response) => loadUserList())
+      .then(() => loadUserList())
       .catch((reject) => console.warn(reject));
   }
 
   return (
     <div>
       <Header
-        searchParam={searchParam}
-        isChangeSelectActive={isChangeSearchParamSelectActive}
-        isChangeSelectBoxItems={isChangeSearchParamRole}
-        updateFormCheck={updateFormCheck}
+        searchParam             = {searchParam}
+        isChangeSelectActive    = {isChangeSearchParamSelectActive}
+        isChangeSelectBoxItems  = {isChangeSearchParamRole}
+        updateFormCheck         = {updateFormCheck}
       />
       <Grid
         rowData       = {userList}
@@ -124,21 +132,20 @@ function UserPage() {
       />
       {userList.length
           && <Pagination
-              limit={limit}
-              setPage={()=>{}}
-              page={searchParam.page}
-              setPage={isChangeCurrentPage}
-              totalEvents={totalEvents}
-              totalPages={totalPages}
+              limit       = {limit}
+              page        = {searchParam.page}
+              setPage     = {isChangeCurrentPage}
+              totalEvents = {totalEvents}
+              totalPages  = {totalPages}
             />
       }
       <UserForm
-        userInfo          = {userInfo}
-        onChangeUserInfo  = {onChangeUserInfo}
-        selectActive={selectActive}
-        isChangeSelectActive={isChangeSelectActive}
-        isChangeSelectBoxItems={isChangeSelectBoxItems}
-        onClickedSaveButton={onClickedSaveButton}
+        userInfo                  = {userInfo}
+        onChangeUserInfo          = {onChangeUserInfo}
+        selectActive              = {selectActive}
+        isChangeSelectActive      = {isChangeSelectActive}
+        isChangeSelectBoxItems    = {isChangeSelectBoxItems}
+        onClickedSaveButton       = {onClickedSaveButton}
       />
     </div>
   )

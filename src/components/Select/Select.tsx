@@ -1,26 +1,42 @@
 import React from 'react'
 import styles from './Select.module.scss';
 import { IconImage } from '@/components';
+import { UserRole } from '@/api/userAPI';
 
-const SelectArray = [
-	{
-		id: 1,
-		name: 'ADMIN',
-		value: 'ADMIN'
-	},
-	{
-		id: 2,
-		name: 'USER',
-		value: 'USER'
-	},
-	{
-		id: 3,
-		name: 'GUEST',
-		value: 'GUEST'
-	}
-]
+interface SelectProps {
+	selectOption: '' | UserRole;
+	selectActive: boolean;
+	isChangeSelectActive: () => void;
+	isChangeSelectBoxItems: (name: string, value: '' | UserRole) => void;
+	filter?: boolean;
+}
 
-function Select({ selectOption, selectActive, isChangeSelectActive, isChangeSelectBoxItems, filter = false }: Props) {
+interface SelectArrayProps {
+	id: number;
+	name: string;
+	value: UserRole;
+}
+
+
+const SelectArray: SelectArrayProps[] = [
+  {
+    id: 1,
+    name: 'ADMIN',
+    value: UserRole.ADMIN
+  },
+  {
+    id: 2,
+    name: 'USER',
+    value: UserRole.USER
+  },
+  {
+    id: 3,
+    name: 'GUEST',
+    value: UserRole.GUEST
+  }
+];
+
+function Select({ selectOption, selectActive, isChangeSelectActive, isChangeSelectBoxItems, filter = false }: SelectProps) {
   return (
     <ul
       className={

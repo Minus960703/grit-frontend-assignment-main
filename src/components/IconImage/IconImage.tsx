@@ -31,7 +31,7 @@ const IconImage = ({
   width       = 24,
   height      = 24
 }: IconImageProps) => {
-  const Icon: any = isDiscernIcon({icon});
+  const Icon = isDiscernIcon({icon});
   return (
     <>
       <img src={Icon} alt="아이콘" width={width} height={height} />

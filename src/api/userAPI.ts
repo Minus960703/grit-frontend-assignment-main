@@ -1,18 +1,19 @@
 import axios from 'axios';
 
 export enum UserRole {
-  'ADMIN',
-  'USER',
-  'GUEST'
+  ADMIN = 'ADMIN',
+  USER = 'USER',
+  GUEST = 'GUEST'
 }
 
 interface UserListProps {
   page    : number;
-  perPage : number;
-  role    : UserRole;
-} //role: 'ADMIN' | 'USER' | 'GUEST'; 도 가능하지만, 확장성을 고려해서 enum 으로 따로 관리
+  perPage?: number;
+  role    : '' | UserRole;
+}
 
 export interface UserInfoProps {
+  id        : number;
   firstName : string;
   lastName  : string;
   role      : UserRole;
@@ -30,7 +31,7 @@ const getUserList = async({page = 1, role}: UserListProps) => {
   }
 }
 
-const updateUserInfo = async ({id, firstName, lastName, email, role, telephone}) => {
+const updateUserInfo = async ({id, firstName, lastName, email, role, telephone}: UserInfoProps) => {
   try {
     const response = await axios.patch(`/api/users/${id}`, {
       firstName,

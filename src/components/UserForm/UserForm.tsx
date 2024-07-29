@@ -1,6 +1,16 @@
 import React from 'react'
 import styles from './UserForm.module.scss';
 import { Button, Select, TextField } from '@/components';
+import { UserInfoProps } from '@/api/userAPI';
+
+interface UserFormProps {
+  userInfo: UserInfoProps;
+  onChangeUserInfo: (name: string, value: string) => void;
+  selectActive: boolean;
+  isChangeSelectActive: () => void;
+  isChangeSelectBoxItems:(name: string, value: string) => void;
+  onClickedSaveButton: () => void;
+}
 
 function UserForm({
   userInfo,
@@ -9,7 +19,7 @@ function UserForm({
   isChangeSelectActive,
   isChangeSelectBoxItems,
   onClickedSaveButton
-}) {
+}: UserFormProps) {
   const updateValidationCheck = () => {
     const { id, firstName, lastName, role, telephone, email } = userInfo;
 

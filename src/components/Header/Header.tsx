@@ -1,14 +1,22 @@
-import React, { useState } from 'react'
 import { Select } from '@/components'
 import styles from './Header.module.scss'
 import { useNavigate } from 'react-router-dom'
+import { SearchParamProps } from '@/pages/user'
+import { UserRole } from '@/api/userAPI';
+
+interface HeaderProps{
+  searchParam: SearchParamProps;
+  isChangeSelectActive: () => void;
+  isChangeSelectBoxItems: (name: string, value: '' | UserRole) => void;
+  updateFormCheck: boolean;
+}
 
 function Header({
   searchParam,
-  isChangeSearchParamSelectActive,
+  isChangeSelectActive,
   isChangeSelectBoxItems,
   updateFormCheck
-}) {
+}: HeaderProps) {
   const navigate = useNavigate();
   const moveToPrevPage = () => {
     if (updateFormCheck) {
@@ -31,7 +39,7 @@ function Header({
       <Select 
         selectActive={searchParam.active}
         selectOption={searchParam.role}
-        isChangeSelectActive={isChangeSearchParamSelectActive}
+        isChangeSelectActive={isChangeSelectActive}
         isChangeSelectBoxItems={isChangeSelectBoxItems}
         filter={true}
       />
