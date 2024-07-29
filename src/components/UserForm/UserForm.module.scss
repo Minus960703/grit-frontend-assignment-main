@@ -1,0 +1,44 @@
+.user__form {
+  position: relative;
+  width: calc(800px - 2px);
+  height: 400px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  padding: 20px;
+  
+  >button {
+    position: absolute;
+    bottom: 30px;
+    right: 30px;
+  }
+
+  .user__name {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 340px 340px;
+    gap: 20px;
+
+    >.user__element {
+      margin: 0px;
+    }
+  }
+
+  .user__element {
+    width: 100%;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin: 20px 0;
+    
+    > label {
+      width: 70px;
+      text-align: left;
+    }
+
+    > input {
+      border-radius: 6px;
+      height: 40px;
+    }
+
+  }
+}
