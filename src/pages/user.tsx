@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import { getUserList, updateUserInfo } from '@/api/userAPI'
-import { Grid, Pagination, UserForm } from '@/components';
+import { Grid, Pagination, UserForm, Header } from '@/components';
 import { CellClickedEvent } from 'ag-grid-community';
 
 const initialValue = {
@@ -13,16 +13,6 @@ const initialValue = {
 };
 
 function UserPage() {
-  const [searchParam, setSearchParam] = useState({
-    page: 1,
-  });
-
-  const [selectActive, setSelectActive] = useState(false);
-
-  const [totalPages, setTotalPages] = useState<number>(0);
-  const [totalEvents, setTotalEvents] = useState<number>(0);
-  const limit = 5;
-  const [userList, setUserList] = useState([]);
   const [columnDefs] = useState([
     { field: 'name'     , headerName: '이름'    , headerClass: 'header-center'  , resizable: false  , cellStyle: {'textAlign' : 'left'}, width: 150},
     { field: 'role'     , headerName: '역할'    , headerClass: 'header-center'  , resizable: false  , width: 150 },
@@ -30,22 +20,22 @@ function UserPage() {
     { field: 'telephone', headerName: '전화번호' , headerClass: 'header-center'  , resizable: false  , width: 250 }
   ]);
 
-  const isChangeCurrentPage = useCallback((value: number) => {
-    setSearchParam((prev) => {
-			return { ...prev, page: value };
-		});
-  }, []);
+  const [searchParam, setSearchParam] = useState({
+    page: 1,
+    role: '',
+    active: false,
+  });
 
-  const [userInfo, setUserInfo] = useState({ ...initialValue })
-  
-  const onChangeUserInfo = (name: string, value: string) => {
-    setUserInfo((prev) => {
-      return { ...prev, [name]: value };
-    })
-  }
+  const [totalPages, setTotalPages] = useState<number>(0);
+  const [totalEvents, setTotalEvents] = useState<number>(0);
+  const limit = 5;
+
+  const [userList, setUserList] = useState([]);
+  const [userInfo, setUserInfo] = useState({ ...initialValue });
+  const [selectActive, setSelectActive] = useState(false);
 
   const loadUserList = () => {
-    getUserList(searchParam.page)
+    getUserList(searchParam)
       .then((response) => {
         const rowDataArray = response.users?.map((user) => {
           return { ...user, name: `${user.firstName} ${user.lastName}` }
@@ -59,19 +49,44 @@ function UserPage() {
 
   useEffect(() => {
     loadUserList();
-  }, [searchParam.page]);
+  }, [searchParam.page, searchParam.role]);
 
   const handleCellClicked = (params: CellClickedEvent) => {
     const field = params.data;
     setUserInfo({ ...field });
   };
 
+  const onChangeUserInfo = (name: string, value: string) => {
+    setUserInfo((prev) => {
+      return { ...prev, [name]: value };
+    })
+  }
+
   const isChangeSelectActive = () => setSelectActive((prev) => !prev);
 
-  const isChangeSelectBoxItems = (name, value) => {
-    onChangeUserInfo(name, value);
+  const isChangeSelectBoxItems = (name: string, value: string) => {
+    if (selectActive) {
+      onChangeUserInfo(name, value);
+    }
     isChangeSelectActive();
   };
+
+  const onChangeSearchParam = (name: string, value: string | number) => {
+    setSearchParam((prev) => {
+      return { ...prev, [name]: value }
+    });
+  }
+
+  const isChangeCurrentPage = (value: number) => onChangeSearchParam('page', value);
+
+  const isChangeSearchParamRole = (name: string, value: string) => {
+    if (searchParam.active) {
+      onChangeSearchParam('role', value);
+    }
+    isChangeSearchParamSelectActive();
+  };
+  
+  const isChangeSearchParamSelectActive = () => setSearchParam((prev) => { return { ...prev, active: !prev.active } });
   
   const onClickedSaveButton = () => {
     updateUserInfo(userInfo)
@@ -81,6 +96,11 @@ function UserPage() {
 
   return (
     <div>
+      <Header
+        searchParam={searchParam}
+        isChangeSelectActive={isChangeSearchParamSelectActive}
+        isChangeSelectBoxItems={isChangeSearchParamRole}
+      />
       <Grid
         rowData       = {userList}
         columnDefs    = {columnDefs}
@@ -103,6 +123,7 @@ function UserPage() {
         isChangeSelectActive={isChangeSelectActive}
         isChangeSelectBoxItems={isChangeSelectBoxItems}
         onClickedSaveButton={onClickedSaveButton}
+        // updateValidationCheck={updateValidationCheck}
       />
     </div>
   )

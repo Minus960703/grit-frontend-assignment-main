@@ -31,7 +31,7 @@ const TextField = ({
     (e.key === 'Enter' && onKeyDownEvent) && onKeyDownEvent();
   }
 
-  const telChangeEvent = (name, value) => {
+  const telChangeEvent = (name: string, value: string) => {
     let formattedValue = value;
     if (type === 'tel') {
       formattedValue = formatPhoneNumber(value);

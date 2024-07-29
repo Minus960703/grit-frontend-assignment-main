@@ -49,7 +49,7 @@ function Pagination({
 				}
 			</button>
 			<button
-				className={`${styles.page__btn} ${page === firstNum ? 'active' : ''}`}
+				className={`${styles.page__btn} ${page === firstNum ? styles.active : ''}`}
 				onClick={() => setPage(firstNum)}
 			>
 				{firstNum}
@@ -58,7 +58,7 @@ function Pagination({
 				if(i <=2){
 					return (
 						<button
-							className={`${styles.page__btn} ${page === firstNum+1+i ? 'active' : ''}`}
+							className={`${styles.page__btn} ${page === firstNum+1+i ? styles.active : ''}`}
 							key={i+1} 
               onClick={() => { setPage(firstNum + 1 + i)}}
 						>

@@ -29,6 +29,9 @@
 .page__btn {
   margin: 0 calc(19px / 2);
   cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .page__btn.active {
